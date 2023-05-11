@@ -1,7 +1,6 @@
 using System;
 
 
-//Adding in a comment here as I spent 2 days in the open tutor labs to get this code to this place. I was crossing the purpose of the functions. ... So credit goes to the Tutor Centre and Dallin Olson. However I also understand the classes better. 
 class Program
 {
 
