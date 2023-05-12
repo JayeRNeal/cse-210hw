@@ -49,7 +49,27 @@ class Program
             }
             else if (choice == 4)
             {
-                myJournal.SaveEntries();
+                Console.WriteLine("Please choose one of these options: ");
+                List<string> save = new List<string>()
+            {
+                "Save a new file to all the entries",
+                "Save to an exsiting file with new entries.",  
+            };
+                foreach (string option in save)
+            {
+             Console.WriteLine($"{save.IndexOf(option)+1}.{option}");
+            }
+            Console.Write("What would you like to do? : ");
+            var saveChoice = Console.ReadLine();
+            var saveOpt = int.Parse(saveChoice);
+            if (saveOpt == 1)
+            {
+             myJournal.SaveAll();
+            }
+            else if (saveOpt == 2)
+            {
+             myJournal.SaveNew();
+            }
             }
             else if (choice == 5) // Quit
             {
