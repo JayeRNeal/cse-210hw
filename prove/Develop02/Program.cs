@@ -139,8 +139,8 @@ public class Prompt
         else{
         GetPrompts();
         }
+
       }else
-      
       {
         Console.WriteLine("All done for today!");
       }
@@ -156,11 +156,6 @@ public class Journal
 
   private string fileName;
 
-  public Journal()
-  {
-    
-  }
-
   public void Write()
   {
     Entry entry = new Entry();
@@ -171,7 +166,7 @@ public class Journal
 
   public void Display()
     {
-      foreach (Entry entry in entryList)  // Add all new entries to the Load L
+      foreach (Entry entry in entryList)  // Add all new entries to the Load List
       {
         loadList.Add(entry);
       }
@@ -219,7 +214,7 @@ public class Journal
   {
     Console.Write("Enter the Filename: ");
     fileName = Console.ReadLine();
-    foreach (Entry entry in entryList)  // Add all new entries to the Load Lis
+    foreach (Entry entry in entryList)  // Add all new entries to the Load List
       {
         loadList.Add(entry);
       }
@@ -255,6 +250,6 @@ public class Entry
       _entry = Console.ReadLine();
 
     }   
-}
+  }
 
 }
