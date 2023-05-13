@@ -1,8 +1,9 @@
 using System;
-using System.I0;
+using System.IO;
 
 class Program
 {
+
     static void Menu()
     {
         Console.WriteLine();
@@ -15,61 +16,62 @@ class Program
             "Save",
             "Quit",
         };
-
-        for (int i = 0; i < menu.Count; i++)
+        foreach (string option in menu)
         {
-            Console.WriteLine($"{i + 1}.{menu[i]}");
+            Console.WriteLine($"{menu.IndexOf(option)+1}.{option}");
         }
-
         Console.Write("What would you like to do? : ");
     }
 
     static void Main(string[] args)
     {
-        int choice = 0;
-        Journal myJournal = new Journal();
+        var choice = 0; 
+        
+        Journal myJournal = new Journal(); 
 
         while (choice != 5)
         {
+
             Menu();
-            string response = Console.ReadLine();
+            var response = Console.ReadLine();
             choice = int.Parse(response);
 
-            if (choice == 1)
+            if (choice == 1) 
             {
-                myJournal.WriteEntry();
+                myJournal.Write();
             }
             else if (choice == 2)
             {
-                myJournal.DisplayEntries();
+                myJournal.Display();
             }
             else if (choice == 3)
             {
-                myJournal.LoadEntries();
+                myJournal.Load();
             }
             else if (choice == 4)
             {
                 Console.WriteLine("Please choose one of these options: ");
                 List<string> save = new List<string>()
-            {
-                "Save a new file to all the entries",
-                "Save to an exsiting file with new entries.",  
-            };
+                {
+                    "Save a new file to all the entries",
+                    "Save to an exsiting file with new entries.",  
+                };
                 foreach (string option in save)
-            {
-             Console.WriteLine($"{save.IndexOf(option)+1}.{option}");
-            }
-            Console.Write("What would you like to do? : ");
-            var saveChoice = Console.ReadLine();
-            var saveOpt = int.Parse(saveChoice);
-            if (saveOpt == 1)
-            {
-             myJournal.SaveAll();
-            }
-            else if (saveOpt == 2)
-            {
-             myJournal.SaveNew();
-            }
+                {
+                    Console.WriteLine($"{save.IndexOf(option)+1}.{option}");
+                }
+                Console.Write("What would you like to do? : ");
+                var saveChoice = Console.ReadLine();
+                var saveOpt = int.Parse(saveChoice);
+
+                if (saveOpt == 1)
+                {
+                    myJournal.SaveAll();
+                }
+                else if (saveOpt == 2)
+                {
+                    myJournal.SaveNew();
+                }
             }
             else if (choice == 5) // Quit
             {
@@ -77,12 +79,13 @@ class Program
             }
             else
             {
-                Console.WriteLine("That is not a valid choice. Please choose again.");
+                Console.Write("That is not a valid choice. Please choose again
             }
+
         }
     }
-}
-            public class Prompt
+
+public class Prompt
 {
     List<int> usedPrompts = new List<int>();
 
@@ -97,7 +100,7 @@ class Program
         "What was the strongest emotion I felt today?",
         "If I had one thing I could do over today, what would it be?",
         "What goals do you want to accomplish today?",
-        "If you could stay anywhere in the world where would you stay and why?",
+        "If you could stay anywhere in the world where would you stay and why?
         "What are you most excited about for today?",
         "List 10 things you love about yourself.",
         "Who has been your biggest insipation?",
@@ -110,14 +113,14 @@ class Program
         "What are some of your favorite memories as a child.",
         "In what ways will you improve in your life?",
         "What are somethings you would like to own?.",
-        "Write down a list of books to read, movies to watch, or skills you'd like to aquire.",
+        "Write down a list of books to read, movies to watch, or skills you'd 
         "Who would you like to meet?",
         "What do you miss most about the past?",
         "What are your strengths and weaknesses?",
         "What are the most valuable life lessons you have learned?",
         "How would you describe yourself to someone you’ve never met?",
         "What advice would you give your younger self?",
-        "What is your favoirte quote and how have you applied it to your life?",
+        "What is your favoirte quote and how have you applied it to your life?
       };
 
       Random rand = new Random();
@@ -145,69 +148,78 @@ class Program
       return prompt;
     }
 }
-        public class Journal
-            {
-            public List<Entry> entryList = new List<Entry>(); //List of New entries
-
-            public List<Entry> loadList = new List<Entry>(); //List of Loaded entries
-
-            private string fileName;
-
-        public Journal()
-        {
-  
-        }
-        public void Write()
-        {
-            Entry entry = new Entry();
-            entry.Write();
-            entryList.Add(entry);
-        }  
-        public void Display()
-        {
-            foreach (Entry entry in entryList)  // Add all new entries to the Load List before displaying.
-        {
-        loadList.Add(entry);
-        }
-            foreach (Entry entry in loadList)  // Now that Load List has all entries (Old and New). Display all.
-        {
-            Console.WriteLine($"------------------------------");
-            Console.WriteLine($"Date: {entry._date} - Prompt: {entry._prompt}");
-            Console.WriteLine($"Response: {entry._entry}");
-            Console.WriteLine($"------------------------------");
-            Console.WriteLine();
-        }
-            }
-        public void Load()
-            {
-            Console.Write("Enter the Filename: ");
-            fileName = Console.ReadLine();
-            string[] lines = System.IO.File.ReadAllLines(fileName);
-            for (int x = 0; x < lines.Count(); x+=3){
-            Entry entry = new Entry();
-            entry._date = lines[x];
-            entry._prompt = lines[x+1];
-            entry._entry = lines[x+2];
-            loadList.Add(entry);
-}
-public void SaveNew()
+public class Journal
 {
-        Console.Write("Enter the Filename: ");
-        fileName = Console.ReadLine();
-            foreach (Entry entry in entryList){
-            using (StreamWriter file = new StreamWriter(fileName,append:true))
+  public List<Entry> entryList = new List<Entry>(); //List of New entries
+
+  public List<Entry> loadList = new List<Entry>(); //List of Loaded entries
+
+  private string fileName;
+
+  public Journal()
+  {
+    
+  }
+
+  public void Write()
+  {
+    Entry entry = new Entry();
+    entry.Write();
+    entryList.Add(entry);
+
+  }  
+
+  public void Display()
     {
-            file.WriteLine(entry._date);
-            file.WriteLine(entry._prompt);
-            file.WriteLine(entry._entry);
+      foreach (Entry entry in entryList)  // Add all new entries to the Load L
+      {
+        loadList.Add(entry);
+      }
+      foreach (Entry entry in loadList)  // Now that Load List has all entries
+      {
+        Console.WriteLine($"---------------------------------");
+        Console.WriteLine($"Date: {entry._date} - Prompt: {entry._prompt}");
+        Console.WriteLine($"Response: {entry._entry}");
+        Console.WriteLine($"---------------------------------");
+        Console.WriteLine();
+      }
+    }
+  public void Load()
+  {
+    Console.Write("Enter the Filename: ");
+    fileName = Console.ReadLine();
+
+    string[] lines = System.IO.File.ReadAllLines(fileName);
+
+    for (int x = 0; x < lines.Count(); x+=3){
+      Entry entry = new Entry();
+      entry._date = lines[x];
+      entry._prompt = lines[x+1];
+      entry._entry = lines[x+2];
+      loadList.Add(entry);
     }
   }
-}
+
+  public void SaveNew()
+  {
+    Console.Write("Enter the Filename: ");
+    fileName = Console.ReadLine();
+
+    foreach (Entry entry in entryList){
+      using (StreamWriter file = new StreamWriter(fileName,append:true))
+      {
+        file.WriteLine(entry._date);
+        file.WriteLine(entry._prompt);
+        file.WriteLine(entry._entry);
+      }
+    }
+  }
+
     public void SaveAll()
   {
     Console.Write("Enter the Filename: ");
     fileName = Console.ReadLine();
-    foreach (Entry entry in entryList)  // Add all new entries to the Load List before displaying.
+    foreach (Entry entry in entryList)  // Add all new entries to the Load Lis
       {
         loadList.Add(entry);
       }
@@ -221,6 +233,7 @@ public void SaveNew()
     }
   }
 }
+
 public class Entry
 {
     public string _entry;
@@ -249,5 +262,4 @@ public class Entry
     }   
 }
 
-}
 }
