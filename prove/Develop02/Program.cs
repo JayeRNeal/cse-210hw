@@ -246,11 +246,6 @@ public class Entry
 
     private Prompt _newPrompt = new Prompt();
 
-    public Entry()
-    {
-
-    }
-
     public void Write()
     {
       _date = _dateTime.ToShortDateString();
