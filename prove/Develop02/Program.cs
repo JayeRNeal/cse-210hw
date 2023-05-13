@@ -79,7 +79,7 @@ class Program
             }
             else
             {
-                Console.Write("That is not a valid choice. Please choose again
+                Console.Write("That is not a valid choice. Please choose again?");
             }
 
         }
@@ -100,7 +100,7 @@ public class Prompt
         "What was the strongest emotion I felt today?",
         "If I had one thing I could do over today, what would it be?",
         "What goals do you want to accomplish today?",
-        "If you could stay anywhere in the world where would you stay and why?
+        "If you could stay anywhere in the world where would you stay and why?",
         "What are you most excited about for today?",
         "List 10 things you love about yourself.",
         "Who has been your biggest insipation?",
@@ -113,14 +113,14 @@ public class Prompt
         "What are some of your favorite memories as a child.",
         "In what ways will you improve in your life?",
         "What are somethings you would like to own?.",
-        "Write down a list of books to read, movies to watch, or skills you'd 
+        "Write down a list of books to read, movies to watch, or skills you'd like to have?",
         "Who would you like to meet?",
         "What do you miss most about the past?",
         "What are your strengths and weaknesses?",
         "What are the most valuable life lessons you have learned?",
         "How would you describe yourself to someone you’ve never met?",
         "What advice would you give your younger self?",
-        "What is your favoirte quote and how have you applied it to your life?
+        "What is your favoirte quote and how have you applied it to your life?",
       };
 
       Random rand = new Random();
