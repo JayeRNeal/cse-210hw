@@ -9,7 +9,7 @@ class Program
         string entry = "";
         while (myScripture.CompletelyHidden() is false && entry.ToLower() !="q") //
         {
-            Console.Write("Press enter to hide words or type 'q' to quit");
+            Console.Write("Press enter to hide words or type 'q' to quit ");
             entry = Console.ReadLine();
             myScripture.HideWords();
             myScripture.Display();
@@ -21,7 +21,7 @@ public class Reference
 {
     private string _bookName;
 
-    private string _chaperter;
+    private string _chapter;
 
     private string _verse;
 
@@ -31,7 +31,7 @@ public class Reference
     }
     public string getChapter()
     {
-        return _chaperter; // misspell?
+        return _chapter; // misspell?
     }
     public string getVerse()
     {
@@ -44,8 +44,8 @@ public class Reference
     }
     public string setChapter(string Chapter)
     {
-        _chaperter = Chapter;
-        return _chaperter; //?
+        _chapter = Chapter;
+        return _chapter; // misspell?
     }
     public string setVerse1(string Verse1)
     {
@@ -61,14 +61,14 @@ public class Reference
     public Reference(string Book, string Chapter, string Verse)
     {
     _bookName = Book;
-    _chaperter = Chapter; // possible error
+    _chapter = Chapter; // possible error
     _verse = Verse;
     }
 
-    public Reference(string book, string Chapter, string startVerse, string endVerse)
+    public Reference(string Book, string Chapter, string startVerse, string endVerse)
     {
     _bookName = Book; // fix error
-    _chaperter = Chapter;
+    _chapter = Chapter;
     _verse = $"{startVerse}-{endVerse}";
     }
     public string GetReferenceToString()
@@ -131,11 +131,21 @@ public class Scripture
         return true;
     }
 
+    public string GetScriptureText()
+    {
+        string text = "";
+        foreach (Word word in scripture)
+        {
+            text = text + " " + word.GetWord();
+        }
+        return text;
+    }
+
     public void Display()
     {
         Console.Clear();
 
-        Console.WriteLine($"{myReference.GetReferenceToString()} - {GetScriptureText()}"); // fix error
+        Console.WriteLine($"{myReference.GetReferenceToString()} - {GetScriptureText()}"); // missing GetScriptureText() public string
     }
 
     public string setPassage(string Script)
