@@ -4,9 +4,9 @@ class Program
 {
     static void Main(string[] args)
     {
-    int choice = 0;
-    while (choice != 4)
-    {
+      int choice = 0;
+      while (choice != 4)
+      {
         Console.WriteLine("Menu:  ");
         Console.WriteLine("1. Begin Breathing Activity");
         Console.WriteLine("2. Begin Reflecting Activity");
@@ -77,9 +77,13 @@ class Activity
         string text = Console.ReadLine();
         int q = int.Parse(text);
         _duration = q;        
-    }
-    
 }
+}
+
+//Missing breathing class
+class Breathing : Activity {
+    public Breathing() : base(){
+    }
 
     public void StartActivity()
     {
@@ -87,31 +91,6 @@ class Activity
 
         DateTime start = DateTime.Now;
         while ((DateTime.Now - start).TotalSeconds < i)
-        {
-            Console.WriteLine("Take a deep breath in...");
-            Thread.Sleep(2000); 
-            Console.WriteLine("Now breathe out...");
-            Thread.Sleep(4000);
-
-            i--;
-        }
-        Console.WriteLine(".");
-        Thread.Sleep(4000);
-    }
-
-//Missing breathing class
-class Breathing : Activity {
-    public Breathing() : base(){
-
-    }
-
-
-    public void StartActivity()
-    {
-        int i = _duration;
-
-        DateTime start = DateTime.Now;
-        while ((DateTime.Now-start).TotalSeconds < i);
         {
             Console.WriteLine("Breath in...");
             Thread.Sleep(2000);
@@ -123,13 +102,13 @@ class Breathing : Activity {
         Console.Write(".");
         Thread.Sleep(4000);
     }
-
+}
 //Reflection
 class Reflection : Activity
 {
     private Random random = new Random();
 
-    private List<string>prompts = new List<string>()
+    private List<string> prompts = new List<string>()
     {
         "What is one of the most difficult tasks you've had to do?",
         "What was one of the best experiences of your life?",
@@ -137,7 +116,7 @@ class Reflection : Activity
         "How do you prioritize self-care?",
         "How do you show yourself kindness and compassion each day?",
     };
-    private List<string>questions = new List<string>()
+    private List<string> questions = new List<string>() //Code output is too long
     {
         "What was your best take away from that experience?",
         "What did you learn about yourself from these expreiences?",
@@ -148,6 +127,7 @@ class Reflection : Activity
         "How has this experience allowed you to grow our of your comfort zone?",
         "What made this time different than other instances when you not succussful?", //?
     };
+
     public Reflection() : base()
     {
 
@@ -220,8 +200,8 @@ class Listing : Activity
         Console.Write(".");
         Thread.Sleep(4000);
     
+        }
     }
 }
-}
-}
+
 
