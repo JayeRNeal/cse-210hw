@@ -1,25 +1,24 @@
-using System;
+using System.IO;
 
 class Program
 {
     private static List<Goal> goals = new List<Goal>();
 
     static int totalPoints = 0;
-
-    static void Main (string[] args)
+    static void Main(string[] args)
     {
         int choice = 0;
-        while(choice !=6)
+        while (choice != 6)
         {
-            Console.WriteLine("n/Menu Options: ");
+            Console.WriteLine("\nMenu Options: ");
             Console.WriteLine("1. Create New Goal");
-            Console.WriteLine("2. List Goals:");
-            Console.WriteLine("3. Save Goals:");
+            Console.WriteLine("2. List Goals");
+            Console.WriteLine("3. Save Goals");
             Console.WriteLine("4. Load Goals");
             Console.WriteLine("5. Record Event");
             Console.WriteLine("6. Quit");
 
-            Console.Write("Please select a choice");
+            Console.Write("Please select a choice from menu: ");
             string enter = Console.ReadLine();
             choice = int.Parse(enter);
 
@@ -30,46 +29,47 @@ class Program
                 int point;
                 void StandardInput()
                 {
-                    Console.Write("What will you name your goal? "); //Problem, fix
-                    name = Console.Readline();
-                    Console.Writeline("How would you describe it? ");
-                    description = Console.Readline();
-                    Console.Write("The amount of points associated with your goal? ");
-                    point = int.Parse(Console.Readline()); //Problem,fix
+                    Console.Write("What will you name your goal? --- ");
+                    name = Console.ReadLine();
+                    Console.Write("How would you describe it? --- ");
+                    description = Console.ReadLine();
+                    Console.Write("The amount of points associated with your goal? ---");
+                    point = int.Parse(Console.ReadLine());
                 }
 
                 int secondChoice = 0;
-                Console.WriteLine("Your goals are: ");
-                Console.WriteLine("1. Small Gaol: ");
-                Console.Writeline("2. Religion Goal: ");
-                Console.WriteLine("3. Dailiy Goal: ");
+                Console.WriteLine("The types of Goals are: ");
+                Console.WriteLine("1. Simple Goal");
+                Console.WriteLine("2. Eternal Goal ");
+                Console.WriteLine("3. CheckList Goal ");
 
-                Console.Write("What goal would you like to make? ");
-                string secondChoice = Console.Readline(); //incorrect??
-                secondChoice = int.Parse(secondEnter);  //mispelled or incorrect
+                Console.Write("What goal would you like to make? --- ");
+                string secondEnter = Console.ReadLine();
+                secondChoice = int.Parse(secondEnter);
 
                 if (secondChoice == 1)
                 {
                     StandardInput();
-                    SmallGoal mySmall = SmallGoal(name, description, point);
-                    goals.Add(mySmall);
+                    SimpleGoal mySimple = new SimpleGoal(name, description, point);
+                    goals.Add(mySimple);
+
                 }
                 else if (secondChoice == 2)
                 {
                     StandardInput();
-                    ReligionGoal myReligion = new ReligionGoalGoal(name, description, point);
-                    goals.Add(myReligion);
+                    EternalGoal myEternal = new EternalGoal(name, description, point);
+                    goals.Add(myEternal);
                 }
                 else if (secondChoice == 3)
                 {
+                    int bonus;
                     int target;
-                    int bouns;
                     StandardInput();
-                    Console.Write("To get a bouns, how many times must you complete this goal?: ");
-                    target = int.Parse(Console.Readline());
-                    Console.WriteLine("What is the total amount of the bonus?: ");
-                    bonus = int.Parse(Console.Readline());
-                    CheckListGoal = myCheckList = new CheckListGoal(name, description, point, target, bouns);
+                    Console.Write("To get a bouns, how many times must you complete this goal?: --- ");
+                    target = int.Parse(Console.ReadLine());
+                    Console.Write("What is the total amount of the bonus?: --- ");
+                    bonus = int.Parse(Console.ReadLine());
+                    CheckListGoal myCheckList = new CheckListGoal(name, description, point, target, bonus);
                     goals.Add(myCheckList);
                 }
             }
@@ -94,25 +94,26 @@ class Program
 
     public static void ListGoals()
     {
-        Console.WriteLine("Your goals are?: ");
-        foreach(Goal goal in goals)
+         Console.WriteLine("Your goals are: ");
+        foreach (Goal goal in goals)
         {
             goal.Status();
         }
-        Console.Write($"\nYou have{totalPoints} points\n");
+        Console.Write($"\nYou have {totalPoints} points\n");
     }
 
     public static void SaveGoal()
     {
-        Console.Write("Enter filename");
-        string filename = Console.Readline();
-        foreach(Goal goal in goals)
+
+        Console.Write("Enter filename ");
+        string filename = Console.ReadLine();
+        foreach (Goal goal in goals)
         {
             using (StreamWriter outputFile = new StreamWriter(filename, append: true))
             {
                 if (goal is CheckListGoal checklist)
-                    outputFile.WriteLine($"{chechList.GetType()}|{checklist.GetName}|{checklist.GetDescription()}|{chechlist.GetPoint()}|{checklist.GetIsCompleteGetIsComplete()}|{checklist.GetCount()}|{checklist.GetTarget()}|{checklist.GetBonus()}");
-                else if (goal is ReligionGoal religion)
+                    outputFile.WriteLine($"{checklist.GetType()}|{checklist.GetName()}|{checklist.GetDescription()}|{checklist.GetPoint()}|{checklist.GetIsComplete()}|{checklist.GetCount()}|{checklist.GetTarget()}|{checklist.GetBonus()}");
+                else if (goal is EternalGoal eternal)
                 {
                     outputFile.WriteLine($"{eternal.GetType()}|{eternal.GetName()}|{eternal.GetDescription()}|{eternal.GetPoint()}|{eternal.GetIsComplete()}|{eternal.GetCount()}");
                 }
@@ -125,21 +126,21 @@ class Program
     public static void LoadGoal()
     {
         Console.Write("Enter filename: ");
-        string filename = Console.Readline();
-        string[] lines = System.IO.File.ReadAllLines(filemane);
+        string filename = Console.ReadLine();
+        string[] lines = System.IO.File.ReadAllLines(filename);
         goals.Clear();
         foreach (string line in lines)
         {
             string[] data = line.Split("|");
-            if (data[0] == "SmallGoal")
+            if (data[0] == "SimpleGoal")
             {
-                SmallGoal small = new SmallGoal(data[1], data[2], int.Parse(data[3]), bool.Parse(data[4]));
-                goals.Add(small);
+                SimpleGoal simple = new SimpleGoal(data[1], data[2], int.Parse(data[3]), bool.Parse(data[4]));
+                goals.Add(simple);
             }
-            else if (data[0] == "ReligonGoal")
+            else if (data[0] == "EternalGoal")
             {
-                ReligionGoal religion = new ReligionGoal(data[1], data[2], int.Parse(data[3]), bool.Parse(data[4]), int.Parse(data[5]));
-                goals.Add(religion);
+                EternalGoal eternal = new EternalGoal(data[1], data[2], int.Parse(data[3]), bool.Parse(data[4]), int.Parse(data[5]));
+                goals.Add(eternal);
             }
             else
             {
@@ -154,19 +155,17 @@ class Program
         Console.WriteLine("Your goals are: ");
         foreach (Goal goal in goals)
         {
-            goal.Status();
+            goal.Status();  
         }
-        Console.Write("Which goal did you accomplish? ");
+        Console.Write("Which goal did you accomplish? --- ");
         int goalchoice = int.Parse(Console.ReadLine());
-        totalPoints = goals[goalsChoice - 1].RecordEvent(totalPoints);
-        }
+        totalPoints = goals[goalchoice - 1].RecordEvent(totalPoints);
+
     }
 
- // exsessive }?
-
-//Goal
+//Event,Status
 public abstract class Goal
-{
+{  
     protected string _description;
     protected int _point;
     protected string _name;
@@ -222,18 +221,16 @@ public class CheckListGoal : Goal
     private int _target;
 
     private int _count;
+    public int _bonus;
 
-    private int _bonus;
-
-}
-    public CheckListGoal(string name, string description, int point, int target, int bonus) : base(name, description, point);
+    public CheckListGoal(string name, string description, int point, int target, int bonus) : base(name, description, point)
     {
         _target = target;
         _bonus = bonus;
         _count = 0;
     }
 
-    public CheckListGoal(string name, string description, int point, bool isComplete, int count, int target, int bonus) : base(name, description, point, isComplete);
+    public CheckListGoal(string name, string description, int point, bool isComplete, int count, int target, int bonus) : base(name, description, point, isComplete)
     {
         _target = target;
         _bonus = bonus;
@@ -242,18 +239,18 @@ public class CheckListGoal : Goal
 
     public override void Status()
     {
-    Console.WriteLine($"[{(_isComplete ? 'X' : ' ')}] {_name} ({_description}) --- Currently completed: {_count}/{_target} ");
+        Console.WriteLine($"[{(_isComplete ? 'X' : ' ')}] {_name} ({_description}) --- Currently completed: {_count}/{_target} ");
     }
     public override int RecordEvent(int totalPoints)
     {
         _count++;
-        Console.WriteLine($"Record progress on {_name} (+{_point} points)");
+        Console.WriteLine($"Recorded progress on {_name} (+{_point} points)");
         totalPoints += _point;
         if (_count == _target)
         {
             _isComplete = true;
-            Console.WriteLine($"You have completed {_name} and earned a bonus of {_bonus}");
-            totalPoints +=_point * _bonus;
+            Console.WriteLine($"Congratulations, you have completed {_name} and earned a bonus of {_bonus} points!");
+            totalPoints += _point + _bonus;
         }
         return totalPoints;
     }
@@ -270,20 +267,20 @@ public class CheckListGoal : Goal
     public int GetTarget()
     {
         return _target;
-    } 
+    }
+}
 
-
-//Religon
-public class ReligionGoal : Goal
-{
+//GoalsEternal
+public class EternalGoal : Goal
+ {
     private int _count;
 
-    public ReligionGoal(string name, string description, int point) : base(name, description, point)
+    public EternalGoal(string name, string description, int point) : base(name, description, point)
     {
         _count = 0;
     }
 
-    public ReligionGoal(string name, string description, int point, bool isComplete, int count) : base(name, description, point, isComplete)
+    public EternalGoal(string name, string description, int point, bool isComplete, int count) : base(name, description, point, isComplete)
     {
         _count = count;
     }
@@ -296,39 +293,40 @@ public class ReligionGoal : Goal
     public override int RecordEvent(int totalPoints)
     {
         _count++;
-        Console.Writeline($"Record progress on {_name} (+{_point} points)");
-        return totalPoints * _point;
+        Console.WriteLine($"Recorded progress on {_name} (+{_point} points)");
+        return totalPoints + _point;
     }
-
-    public int GetCount()
-    {
-        return _count;
-    }
+   
+   public int GetCount()
+   {
+       return _count;
+   }
 }
 
-//Small
-public class SmallGoal : Goal
+//GoalsSimple
+public class SimpleGoal : Goal
 {
-    public SmallGoal(string name, string description, int point) : base(name, description, point)
-    {
 
+    public SimpleGoal(string name, string description, int point) : base(name, description, point)
+    {
+        
     }
 
-    public SmallGoal(string name, string description, int point, bool isComplete) : base(name, description, point, isComplete)
+    public SimpleGoal(string name, string description, int point, bool isComplete) : base(name, description, point, isComplete)
     {
-
+        
     }
 
     public override int RecordEvent(int totalPoints)
     {
         _isComplete = true;
-        return totalPoints + _points;
+        return totalPoints + _point;
     }
-
+    
     public override void Status()
-    {
+    {        
         Console.WriteLine($"[{(_isComplete ? 'X' : ' ')}] {_name} ({_description})");
-
     }
+}
 }
 
