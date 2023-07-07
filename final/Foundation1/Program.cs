@@ -27,7 +27,7 @@ class Program{
         //iterate through videos & display info
         foreach (Video video in videos){
             Console.WriteLine($"Title: {video._title}");
-            Console.WriteLine{$"Author: {video._author}"}; //error? says ;expected but have a ; at end of each line.
+            Console.WriteLine{$"Author: {video._author}"}; //error? says ; expected but have a ; at end of each line.
             Console.WriteLine($"Length: {video._lengthSeconds} seconds");
             Console.WriteLine($"Number of comments: {video.NumComments()}");
             Console.WriteLine();
