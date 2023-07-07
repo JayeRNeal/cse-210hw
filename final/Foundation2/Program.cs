@@ -6,20 +6,20 @@ class Program
     {
 //Create orders
         Order order1 = new Order(
-        new Customer("John Doe", new Address("1472 Ave", "Provo", "UT", "US")),
+        new Customer("John Doe", new Address("1472 Ave", "Provo", "UT", "USA")),
         new[] {
             new Product("Playstation 4", "PS4", 300.99f, 2),
             new Product("Dell Computer", "DC", 700.99f, 3),
         });
         Order order2 = new Order(
-        new Customer("Jane Doe", new Address("1572 Service Rd", "Orem", "UT", "US")),
+        new Customer("Jane Doe", new Address("1572 Service Rd", "Toronto", "BC", "Canada")),
         new[] {
             new Product("Basket", "BSK", 30.99f, 1),
             new Product("Monopoly", "MPY", 24.99f, 2),
             new Product("Blinds", "BLD", 49.99f, 5),
         });
         Order order2 = new Order(
-        new Customer("Christopher Columbus", new Address("1492 Ocean Blue St", "Valladolid", "Madrid", "ES")),
+        new Customer("Christopher Columbus", new Address("1492 Ocean Blue St", "Valladolid", "Madrid", "Spain")),
         new[] {
             new Product("Shoes", "SH", 30.99f, 4),
             new Product("Laces", "LC", 5.99f, 2),
@@ -119,8 +119,65 @@ class Program
 }
 
 //Customer class
+class Customer
+{
+    private string _name;
+    private Address _address;
 
+    public string GetName()
+    {
+        return _name;
+    }
 
+    public Address GetAddress()
+    {
+        return _address;
+    }
 
+    public Customer(string name, Address address)
+    {
+        _name = name;
+        _address = address;
+    }
+
+    public bool IsInUSA()
+    {
+        return _address.IsInUSA();
+    }
+}
 
 //Address class
+class Address
+{
+    private string _street;
+    private string _city;
+    private string _state;
+    private string _country;
+    public Address(string street, string city, string state, string country)
+    {
+        _street = street;
+        _city = city;
+        _state = state;
+        _country = country;
+    }
+    public string GetStreet()
+    {
+        return _street;
+    }
+    public string GetCity()
+    {
+        return _state;
+    }
+    public string GetCountry()
+    {
+        return _country;
+    }
+    public string IsInUSA()
+    {
+        return _country.ToLower() == "usa";
+    }
+    public string GetAddress()
+    {
+        return ($"{_street}\n{_city}, {_state} {_country}");
+    }
+}
