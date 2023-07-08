@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-//Create orders
+        //Create orders
         Order order1 = new Order(
         new Customer("John Doe", new Address("1472 Ave", "Provo", "UT", "USA")),
         new[] {
@@ -18,7 +18,7 @@ class Program
             new Product("Monopoly", "MPY", 24.99f, 2),
             new Product("Blinds", "BLD", 49.99f, 5),
         });
-        Order order2 = new Order(
+        Order order3 = new Order(
         new Customer("Christopher Columbus", new Address("1492 Ocean Blue St", "Valladolid", "Madrid", "Spain")),
         new[] {
             new Product("Shoes", "SH", 30.99f, 4),
@@ -49,19 +49,20 @@ class Program
         Console.WriteLine(x);
     }
 }
-
- //Order class
- class Order{
-
+//Orders
+class Order
+{
     private Product[] _products;
     private Customer _customer;
 
-    public Order(Customer customer, Product[] products){
-         _customer = customer;
-         _products = products;
+    public Order(Customer customer, Product[] products)
+    {
+        _customer = customer;
+        _products = products;
     }
 
-    public float GetTotalPrice(){
+    public float GetTotalPrice()
+    {
         float subtotal = 0;
         foreach (var product in _products)
         {
@@ -70,23 +71,25 @@ class Program
         float shippingCost = _customer.GetAddress().IsInUSA() ? 5f : 35f;
         return subtotal + shippingCost;
     }
+
     public string GetPackingLabel()
     {
-    var label = ($"Packing Label:\n");        
-    foreach (var product in _products)
-    {
-        label += ($"{product.GetName()} ({product.GetID()})\n");
+        var label = ($"Packing Label:\n");        
+        foreach (var product in _products)
+        {
+            label += ($"{product.GetName()} ({product.GetID()})\n");
+        }
+        return label;
     }
-    return label;
-    }
+
     public string GetShippingLabel()
     {
-    return ($"Shipping Label:\n{_customer.GetName()}\n{_customer.GetAddress().ToString()}");
+        return ($"Shipping Label:\n{_customer.GetName()}\n{_customer.GetAddress().ToString()}");
     }
- }
+}
 
- //Products class
- class Product
+//Products
+class Product
 {
     private string _name;
     private string _id;
@@ -118,7 +121,7 @@ class Program
     }
 }
 
-//Customer class
+//Customers
 class Customer
 {
     private string _name;
@@ -128,7 +131,6 @@ class Customer
     {
         return _name;
     }
-
     public Address GetAddress()
     {
         return _address;
@@ -146,8 +148,8 @@ class Customer
     }
 }
 
-//Address class
-class Address
+//Address
+ class Address
 {
     private string _street;
     private string _city;
@@ -164,20 +166,30 @@ class Address
     {
         return _street;
     }
+
     public string GetCity()
+    {
+        return _city;
+    }
+
+    public string GetState()
     {
         return _state;
     }
+
     public string GetCountry()
     {
-        return _country;
+       return _country;
     }
-    public string IsInUSA()
+
+    public bool IsInUSA()
     {
         return _country.ToLower() == "usa";
     }
+
     public string GetAddress()
     {
         return ($"{_street}\n{_city}, {_state} {_country}");
     }
+
 }
